@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Légende de Dame Carcas · Livre audio</title>
+<meta name="description" content="Livre audio : La Légende de Dame Carcas, en français, anglais et espagnol.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f5ede0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17120f" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%238c2a1c' d='M3 30V10h4v4h4v-4h4v4h2v-4h4v4h4v-4h4v20z'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --paper: #f5ede0;
+    --card: #fbf6ee;
+    --ink: #2b2118;
+    --muted: #6b5a48;
+    --line: #dccdb6;
+    --accent: #8c2a1c;
+    --accent-ink: #fff8f0;
+    --shadow: 0 1px 2px rgba(43,33,24,.06), 0 8px 28px rgba(43,33,24,.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #17120f;
+      --card: #211a15;
+      --ink: #efe5d4;
+      --muted: #b3a28c;
+      --line: #3a2f26;
+      --accent: #d9876a;
+      --accent-ink: #1b130e;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 28px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    display: flex;
+    justify-content: center;
+    padding: max(28px, env(safe-area-inset-top)) 18px max(28px, env(safe-area-inset-bottom));
+  }
+  main { width: 100%; max-width: 520px; }
+
+  header { text-align: center; margin: 8px 0 22px; }
+  .kicker {
+    font-variant: small-caps;
+    letter-spacing: .14em;
+    font-size: .95rem;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-weight: 600;
+    font-size: clamp(1.75rem, 7vw, 2.35rem);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+  .rampart { display: block; width: 150px; height: 14px; margin: 0 auto 14px; color: var(--accent); }
+  .lead { margin: 0; color: var(--muted); font-style: italic; text-wrap: balance; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 20px 18px 18px;
+  }
+  .label {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: .8rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 10px;
+    text-align: center;
+  }
+  .langs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+  .langs button {
+    font: inherit;
+    font-size: 1.02rem;
+    min-height: 48px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .langs button:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .langs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .langs button:focus-visible, .resume button:focus-visible, audio:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  .now { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 2px 10px; }
+  .now strong { font-weight: 600; font-size: 1.1rem; }
+  .now span {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: .85rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums;
+  }
+  audio { display: block; width: 100%; height: 54px; }
+
+  .resume {
+    display: none;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .resume.show { display: flex; }
+  .resume button {
+    flex: 1 1 auto;
+    font: inherit;
+    font-size: .98rem;
+    min-height: 44px;
+    padding: 0 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+  }
+  .resume button.primary { background: var(--accent); color: var(--accent-ink); }
+
+  .error {
+    display: none;
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: .95rem;
+  }
+  .error.show { display: block; }
+
+  .tip { text-align: center; color: var(--muted); font-size: .95rem; margin: 18px 8px 0; }
+  .tip svg { width: 18px; height: 18px; vertical-align: -3px; margin-right: 6px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker" data-t="kicker">Livre audio</p>
+    <h1 data-t="title">La Légende de Dame Carcas</h1>
+    <svg class="rampart" viewBox="0 0 150 14" aria-hidden="true">
+      <path fill="currentColor" d="M0 14V6h10V0h10v6h10V0h10v6h10V0h10v6h10V0h10v6h10V0h10v6h10V0h10v6h10V0h10v6h10v8z" opacity=".85"/>
+    </svg>
+    <p class="lead" data-t="lead">Installez-vous, montez le son et laissez-vous conter la légende.</p>
+  </header>
+
+  <section class="card">
+    <p class="label" id="choose" data-t="choose">Choisissez votre langue</p>
+    <div class="langs" role="group" aria-labelledby="choose">
+      <button type="button" data-lang="fr" lang="fr" aria-pressed="true">Français</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">English</button>
+      <button type="button" data-lang="es" lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <div class="now">
+      <strong data-t="version">Version française</strong>
+      <span id="duration"></span>
+    </div>
+
+    <audio id="player" controls preload="metadata" src="carcas-fr.mp3">
+      <a href="carcas-fr.mp3">carcas-fr.mp3</a>
+    </audio>
+
+    <div class="resume" id="resume">
+      <button type="button" class="primary" id="resumeBtn"></button>
+      <button type="button" id="restartBtn" data-t="restart">Recommencer</button>
+    </div>
+
+    <p class="error" id="error" role="alert" data-t="error">Le son ne se charge pas. Vérifiez votre connexion Internet, puis rechargez la page.</p>
+  </section>
+
+  <p class="tip">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/></svg><span data-t="tip">Avec des écouteurs, l'immersion est totale.</span>
+  </p>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var TRACKS = {
+    fr: { file: "carcas-fr.mp3", minutes: 23 },
+    en: { file: "carcas-en.mp3", minutes: 21 },
+    es: { file: "carcas-es.mp3", minutes: 21 }
+  };
+
+  var TEXT = {
+    fr: {
+      doc: "La Légende de Dame Carcas · Livre audio",
+      kicker: "Livre audio",
+      title: "La Légende de Dame Carcas",
+      lead: "Installez-vous, montez le son et laissez-vous conter la légende.",
+      choose: "Choisissez votre langue",
+      version: "Version française",
+      duration: "Durée : {m} min",
+      resume: "Reprendre à {t}",
+      restart: "Recommencer",
+      error: "Le son ne se charge pas. Vérifiez votre connexion Internet, puis rechargez la page.",
+      tip: "Avec des écouteurs, l'immersion est totale."
+    },
+    en: {
+      doc: "The Legend of Dame Carcas · Audiobook",
+      kicker: "Audiobook",
+      title: "The Legend of Dame Carcas",
+      lead: "Settle in, turn up the sound and let the legend be told.",
+      choose: "Choose your language",
+      version: "English version",
+      duration: "Length: {m} min",
+      resume: "Resume at {t}",
+      restart: "Start over",
+      error: "The audio won't load. Check your Internet connection, then reload the page.",
+      tip: "Use headphones for the full immersive experience."
+    },
+    es: {
+      doc: "La leyenda de Dame Carcas · Audiolibro",
+      kicker: "Audiolibro",
+      title: "La leyenda de Dame Carcas",
+      lead: "Acomódese, suba el volumen y déjese contar la leyenda.",
+      choose: "Elija su idioma",
+      version: "Versión en español",
+      duration: "Duración: {m} min",
+      resume: "Reanudar en {t}",
+      restart: "Empezar de nuevo",
+      error: "El audio no se carga. Compruebe su conexión a Internet y vuelva a cargar la página.",
+      tip: "Con auriculares, la inmersión es total."
+    }
+  };
+
+  var DEFAULT_LANG = "en";
+  // Regional languages of France and Spain fall back to the national version rather than English.
+  var NEAR = { oc: "fr", br: "fr", co: "fr", ca: "es", gl: "es", eu: "es", ast: "es" };
+  var player = document.getElementById("player");
+  var buttons = document.querySelectorAll(".langs button");
+  var resumeBox = document.getElementById("resume");
+  var resumeBtn = document.getElementById("resumeBtn");
+  var restartBtn = document.getElementById("restartBtn");
+  var errorBox = document.getElementById("error");
+  var durationEl = document.getElementById("duration");
+  var current = null;
+  var lastSave = 0;
+
+  // Browser storage can be missing or blocked (private mode, some in-app browsers): never let it break the page.
+  function store(key, value) {
+    try {
+      if (value === null) localStorage.removeItem(key);
+      else localStorage.setItem(key, String(value));
+    } catch (e) {}
+  }
+  function read(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+
+  function fmt(seconds) {
+    seconds = Math.floor(seconds);
+    var h = Math.floor(seconds / 3600);
+    var m = Math.floor((seconds % 3600) / 60);
+    var s = seconds % 60;
+    var mm = h ? String(m).padStart(2, "0") : String(m);
+    return (h ? h + ":" : "") + mm + ":" + String(s).padStart(2, "0");
+  }
+
+  function pickInitialLang() {
+    var params = new URLSearchParams(location.search);
+    var forced = (params.get("lang") || location.hash.replace("#", "")).toLowerCase();
+    if (TRACKS[forced]) return forced;
+    var saved = read("carcas-lang");
+    if (TRACKS[saved]) return saved;
+    var prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""];
+    for (var i = 0; i < prefs.length; i++) {
+      var code = String(prefs[i]).toLowerCase().split("-")[0];
+      if (TRACKS[code]) return code;
+    }
+    for (var j = 0; j < prefs.length; j++) {
+      var near = NEAR[String(prefs[j]).toLowerCase().split("-")[0]];
+      if (near) return near;
+    }
+    return DEFAULT_LANG;
+  }
+
+  function applyText(lang) {
+    var t = TEXT[lang];
+    document.documentElement.lang = lang;
+    document.title = t.doc;
+    document.querySelectorAll("[data-t]").forEach(function (el) {
+      var key = el.getAttribute("data-t");
+      if (t[key]) el.textContent = t[key];
+    });
+    durationEl.textContent = t.duration.replace("{m}", TRACKS[lang].minutes);
+  }
+
+  function updateMediaSession(lang) {
+    if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: TEXT[lang].title,
+        artist: TEXT[lang].kicker
+      });
+    } catch (e) {}
+  }
+
+  function showResume(lang) {
+    var pos = parseFloat(read("carcas-pos-" + lang));
+    if (pos > 15) {
+      resumeBtn.textContent = TEXT[lang].resume.replace("{t}", fmt(pos));
+      resumeBtn.dataset.pos = String(pos);
+      resumeBox.classList.add("show");
+    } else {
+      resumeBox.classList.remove("show");
+    }
+  }
+
+  function setLang(lang, userChose) {
+    if (!TRACKS[lang] || lang === current) return;
+    if (current && player.currentTime > 0) store("carcas-pos-" + current, player.currentTime);
+    player.pause();
+    current = lang;
+    buttons.forEach(function (b) {
+      b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false");
+    });
+    errorBox.classList.remove("show");
+    var file = TRACKS[lang].file;
+    if (player.getAttribute("src") !== file) {
+      player.setAttribute("src", file);
+      player.load();
+    }
+    applyText(lang);
+    updateMediaSession(lang);
+    showResume(lang);
+    if (userChose) store("carcas-lang", lang);
+  }
+
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { setLang(b.dataset.lang, true); });
+  });
+
+  resumeBtn.addEventListener("click", function () {
+    var pos = parseFloat(resumeBtn.dataset.pos) || 0;
+    resumeBox.classList.remove("show");
+    var go = function () {
+      player.currentTime = pos;
+      var p = player.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+    if (player.readyState >= 1) go();
+    else player.addEventListener("loadedmetadata", go, { once: true });
+  });
+
+  restartBtn.addEventListener("click", function () {
+    store("carcas-pos-" + current, null);
+    resumeBox.classList.remove("show");
+    player.currentTime = 0;
+    var p = player.play();
+    if (p && p.catch) p.catch(function () {});
+  });
+
+  player.addEventListener("play", function () {
+    resumeBox.classList.remove("show");
+    errorBox.classList.remove("show");
+  });
+  player.addEventListener("timeupdate", function () {
+    var now = Date.now();
+    if (now - lastSave > 4000 && player.currentTime > 0) {
+      lastSave = now;
+      store("carcas-pos-" + current, player.currentTime);
+    }
+  });
+  player.addEventListener("pause", function () {
+    if (player.currentTime > 0 && !player.ended) store("carcas-pos-" + current, player.currentTime);
+  });
+  player.addEventListener("ended", function () {
+    store("carcas-pos-" + current, null);
+  });
+  player.addEventListener("loadedmetadata", function () {
+    if (isFinite(player.duration) && player.duration > 0) {
+      durationEl.textContent = TEXT[current].duration.replace("{m}", Math.round(player.duration / 60));
+    }
+  });
+  player.addEventListener("error", function () {
+    if (player.error) errorBox.classList.add("show");
+  });
+
+  setLang(pickInitialLang(), false);
+})();
+</script>
+</body>
+</html>
